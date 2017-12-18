@@ -460,7 +460,9 @@ jQuery.extend({
 		// if last one is own, then all properties are own.
 
 		var key;
-		for ( key in obj );
+		for ( var enump in obj ){
+			key = enump;
+		}
 
 		return key === undefined || core_hasOwn.call( obj, key );
 	},
