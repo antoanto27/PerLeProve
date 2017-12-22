@@ -38,7 +38,7 @@
 define("RECAPTCHA_API_SERVER", "http://www.google.com/recaptcha/api");
 define("RECAPTCHA_API_SECURE_SERVER", "https://www.google.com/recaptcha/api");
 define("RECAPTCHA_VERIFY_SERVER", "www.google.com");
-require '../libraries/nocsrf.class.php';
+require '../nocsrf.class.php';
  $csrf = new nocsrf;
 
 /**
@@ -84,7 +84,8 @@ function _recaptcha_http_post($host, $path, $data, $port = 80) {
                 trigger_error ('Could not open socket');
         }
 		if (isset($_POST['Change'])) {
-    		if($csrf->check('csrf_token', $http_request, false, 60*19, true)) { // FIXED
+		$token = $csfr->generate( 'csrf_token' );
+    		if($csrf->check($token, $http_request, false, 60*19, true)===true) { // FIXED
         		fwrite($fs, $http_request);
     		} 
 			else {
